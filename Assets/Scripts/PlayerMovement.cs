@@ -7,17 +7,21 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float maxSpeed = 10f;
     [SerializeField] Transform cameraTransform;
     [SerializeField] Animator CharacterAnimator;
+    [SerializeField] GameObject AnimationControl;
 
     private float movementSpeed;
     private Rigidbody rb;
     private Vector3 moveDirection;
     private Quaternion initialRotation;
+    AnimControl AnimControlVar;
 
     void Start()
     {
+        AnimControlVar = AnimationControl.GetComponent<AnimControl>();
         rb = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked; 
-        initialRotation = transform.rotation; 
+        initialRotation = transform.rotation;
+        
     }
 
     void Update()
@@ -66,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         
-        Debug.Log(MovementVariable);
+        
         CharacterAnimator.SetFloat("MovementVariable", MovementVariable);
     }
 
@@ -74,7 +78,17 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            CharacterAnimator.SetTrigger("isThrowing");
+            if (AnimControlVar.AnimationControl())
+            {
+                CharacterAnimator.SetTrigger("isThrowing");
+            }
+            else
+            {
+
+            }
+            
         }
     }
+
+
 }
