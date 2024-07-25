@@ -370,8 +370,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwPosition: {fileID: 132022705}
+  CharacterAnimator: {fileID: 125801598}
   Snowball: {fileID: 1722012679}
   AnimationControl: {fileID: 132022705}
+  SnowballRB: {fileID: 1722012684}
+  snowballSpeed: 10
 --- !u!114 &132022708
 MonoBehaviour:
   m_ObjectHideFlags: 0

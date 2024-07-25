@@ -10,7 +10,7 @@ public class AnimControl : MonoBehaviour
 
     public bool AnimationControl()
     {
-        AnimatorStateInfo stateInfo = CharacterAnimator.GetCurrentAnimatorStateInfo(1);
+        AnimatorStateInfo stateInfo = CharacterAnimator.GetCurrentAnimatorStateInfo(2);
 
         
             if (stateInfo.normalizedTime >= 0.9f)

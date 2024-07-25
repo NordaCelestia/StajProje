@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Move();
         CharacterAnim();
-        throwSnowball();
+        
     }
 
     void Move()    //haraket
@@ -74,21 +74,7 @@ public class PlayerMovement : MonoBehaviour
         CharacterAnimator.SetFloat("MovementVariable", MovementVariable);
     }
 
-    void throwSnowball()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (AnimControlVar.AnimationControl())
-            {
-                CharacterAnimator.SetTrigger("isThrowing");
-            }
-            else
-            {
-
-            }
-            
-        }
-    }
+    
 
 
 }

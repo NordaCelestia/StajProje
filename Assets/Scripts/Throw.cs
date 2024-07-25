@@ -5,6 +5,7 @@ using UnityEngine;
 public class Throw : MonoBehaviour
 {
     [SerializeField] GameObject throwPosition;
+    [SerializeField] Animator CharacterAnimator;
     [SerializeField] GameObject Snowball;
     [SerializeField] GameObject AnimationControl;
     [SerializeField] Rigidbody SnowballRB;
@@ -23,7 +24,7 @@ public class Throw : MonoBehaviour
     void Update()
     {
         ThrowSnowball();
-
+        
 
     }
 
@@ -31,20 +32,26 @@ public class Throw : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            CharacterAnimator.SetTrigger("GrabSnowball");
 
-            if (AnimControlVar.AnimationControl())
+            while (true)
             {
-                StartCoroutine(delayedThrow());
-            }
-            else
-            {
-
+                if (AnimControlVar.AnimationControl() == true)
+                {
+                    CharacterAnimator.SetTrigger("isThrowing");
+                    StartCoroutine(delayedThrow());
+                    break;
+                }
+                else
+                {
+                    continue;
+                }
             }
 
         }
     }
 
-    IEnumerator delayedThrow()
+    IEnumerator delayedThrow() //animasyonda kolun kalkmasý için bekliyor.
     {
         yield return new WaitForSeconds(0.3f);
         Snowball.SetActive(true);
