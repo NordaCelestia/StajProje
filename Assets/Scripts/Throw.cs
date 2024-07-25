@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class Throw : MonoBehaviour
 {
@@ -9,16 +11,19 @@ public class Throw : MonoBehaviour
     [SerializeField] GameObject Snowball;
     [SerializeField] GameObject AnimationControl;
     [SerializeField] Rigidbody SnowballRB;
+    [SerializeField] Image UISnowballRenderer;
     [SerializeField] float snowballSpeed = 10;
 
     
-    AnimControl AnimControlVar;
+    
+    
 
 
     private void Start()
     {
         SnowballRB = Snowball.GetComponent<Rigidbody>();
-        AnimControlVar = AnimationControl.GetComponent<AnimControl>();
+
+        UIUpdate(0.4f);
     }
 
     void Update()
@@ -45,12 +50,18 @@ public class Throw : MonoBehaviour
     IEnumerator animationTransition()
     {
         yield return new WaitForSeconds(1.1f);
+
+        UIUpdate(1f);
+
         CharacterAnimator.SetTrigger("isThrowing");
     }
 
     IEnumerator delayedThrow() //animasyonda kolun kalkmasý için bekliyor.
     {
         yield return new WaitForSeconds(1.4f);
+
+        UIUpdate(0.4f);
+
         Snowball.SetActive(true);
         Snowball.transform.position = throwPosition.transform.position;
 
@@ -58,5 +69,12 @@ public class Throw : MonoBehaviour
 
         
         SnowballRB.AddForce(force, ForceMode.VelocityChange);
+    }
+
+    void UIUpdate(float alfa)
+    {
+        Color colorSnowball = UISnowballRenderer.color;
+        colorSnowball.a = alfa;
+        UISnowballRenderer.color = colorSnowball;
     }
 }
