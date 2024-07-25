@@ -34,26 +34,23 @@ public class Throw : MonoBehaviour
         {
             CharacterAnimator.SetTrigger("GrabSnowball");
 
-            while (true)
-            {
-                if (AnimControlVar.AnimationControl() == true)
-                {
-                    CharacterAnimator.SetTrigger("isThrowing");
-                    StartCoroutine(delayedThrow());
-                    break;
-                }
-                else
-                {
-                    continue;
-                }
-            }
+            StartCoroutine(animationTransition());
+            
+            StartCoroutine(delayedThrow());
+                 
 
         }
     }
 
+    IEnumerator animationTransition()
+    {
+        yield return new WaitForSeconds(1.1f);
+        CharacterAnimator.SetTrigger("isThrowing");
+    }
+
     IEnumerator delayedThrow() //animasyonda kolun kalkmasý için bekliyor.
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(1.4f);
         Snowball.SetActive(true);
         Snowball.transform.position = throwPosition.transform.position;
 
