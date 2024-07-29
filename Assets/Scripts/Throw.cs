@@ -13,19 +13,21 @@ public class Throw : MonoBehaviour
     [SerializeField] Image UISnowballRenderer;
     [SerializeField] float snowballSpeed = 30;
 
-
+    bool firstRun;
     private Transform targetTransform;
 
     private void Start()
     {
+        firstRun = true;
         SnowballRB = Snowball.GetComponent<Rigidbody>();
         UIUpdate(1f);
+        ThrowSnowball();
     }
 
     void Update()
     {
         FindTarget();
-        ThrowSnowball();
+        
     }
 
     void FindTarget()
@@ -44,24 +46,37 @@ public class Throw : MonoBehaviour
 
     void ThrowSnowball()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            CharacterAnimator.SetTrigger("GrabSnowball");
             StartCoroutine(animationTransition());
-            StartCoroutine(delayedThrow());
-        }
+            
     }
 
     IEnumerator animationTransition() // Animasyonlar arasý geçiþ
     {
-        yield return new WaitForSeconds(1.1f);
-        UIUpdate(1f);
-        CharacterAnimator.SetTrigger("isThrowing");
+
+        if (firstRun)
+        {
+            firstRun = false;
+            yield return new WaitForSeconds(1f);
+            CharacterAnimator.SetTrigger("GrabSnowball");
+            yield return new WaitForSeconds(1.1f);
+            UIUpdate(1f);
+            CharacterAnimator.SetTrigger("isThrowing");
+            StartCoroutine(delayedThrow());
+        }
+        else
+        {
+            CharacterAnimator.SetTrigger("GrabSnowball");
+            yield return new WaitForSeconds(1.1f);
+            UIUpdate(1f);
+            CharacterAnimator.SetTrigger("isThrowing");
+            StartCoroutine(delayedThrow());
+        }
+
     }
 
     IEnumerator delayedThrow() // Animasyonda kolun kalkmasý için bekliyor
     {
-        yield return new WaitForSeconds(1.4f);
+        yield return new WaitForSeconds(0.3f);
 
         UIUpdate(0.4f);
 
@@ -87,6 +102,8 @@ public class Throw : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
         UIUpdate(1f);
+
+        StartCoroutine(animationTransition());
     }
 
     void UIUpdate(float alpha)
