@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public class Throw : MonoBehaviour
 {
     [SerializeField] GameObject throwPosition;
@@ -12,25 +11,35 @@ public class Throw : MonoBehaviour
     [SerializeField] GameObject AnimationControl;
     [SerializeField] Rigidbody SnowballRB;
     [SerializeField] Image UISnowballRenderer;
-    [SerializeField] float snowballSpeed = 10;
+    [SerializeField] float snowballSpeed = 30;
 
-    
-    
-    
 
+    private Transform targetTransform;
 
     private void Start()
     {
         SnowballRB = Snowball.GetComponent<Rigidbody>();
-
-        UIUpdate(0.4f);
+        UIUpdate(1f);
     }
 
     void Update()
     {
+        FindTarget();
         ThrowSnowball();
-        
+    }
 
+    void FindTarget()
+    {
+        GameObject target = GameObject.FindWithTag("Team2");
+        if (target != null)
+        {
+            targetTransform = target.transform;
+        }
+        else
+        {
+            targetTransform = null;
+            Debug.LogWarning("Target with tag 'Team2' not found.");
+        }
     }
 
     void ThrowSnowball()
@@ -38,25 +47,19 @@ public class Throw : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             CharacterAnimator.SetTrigger("GrabSnowball");
-
             StartCoroutine(animationTransition());
-            
             StartCoroutine(delayedThrow());
-                 
-
         }
     }
 
-    IEnumerator animationTransition()
+    IEnumerator animationTransition() // Animasyonlar arasý geçiþ
     {
         yield return new WaitForSeconds(1.1f);
-
         UIUpdate(1f);
-
         CharacterAnimator.SetTrigger("isThrowing");
     }
 
-    IEnumerator delayedThrow() //animasyonda kolun kalkmasý için bekliyor.
+    IEnumerator delayedThrow() // Animasyonda kolun kalkmasý için bekliyor
     {
         yield return new WaitForSeconds(1.4f);
 
@@ -65,16 +68,31 @@ public class Throw : MonoBehaviour
         Snowball.SetActive(true);
         Snowball.transform.position = throwPosition.transform.position;
 
-        Vector3 force = throwPosition.transform.forward * snowballSpeed;
+        SnowballRB.velocity = Vector3.zero;
+        SnowballRB.angularVelocity = Vector3.zero;
 
-        
-        SnowballRB.AddForce(force, ForceMode.VelocityChange);
+        if (targetTransform != null)
+        {
+            Vector3 targetCenter = targetTransform.position;
+            // Hedefin y-ekseni yüksekliðini ortalayarak atýþý düzeltin
+            targetCenter.y = throwPosition.transform.position.y;
+            Vector3 throwDirection = (targetCenter - throwPosition.transform.position).normalized;
+            Vector3 force = throwDirection * snowballSpeed;
+            SnowballRB.AddForce(force, ForceMode.VelocityChange);
+        }
+        else
+        {
+            Debug.LogWarning("Target transform is not set. Snowball will not be thrown.");
+        }
+
+        yield return new WaitForSeconds(2f);
+        UIUpdate(1f);
     }
 
-    void UIUpdate(float alfa)
+    void UIUpdate(float alpha)
     {
         Color colorSnowball = UISnowballRenderer.color;
-        colorSnowball.a = alfa;
+        colorSnowball.a = alpha;
         UISnowballRenderer.color = colorSnowball;
     }
 }
