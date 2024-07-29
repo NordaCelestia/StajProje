@@ -427,6 +427,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &125801599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125801593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 555f90c51ff5a804c84160539ee556ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterData: {fileID: 11400000, guid: 521d518a529cdad4788f29c22b827076, type: 2}
 --- !u!1 &132022705
 GameObject:
   m_ObjectHideFlags: 0
@@ -1044,6 +1057,7 @@ GameObject:
   - component: {fileID: 1566943873}
   - component: {fileID: 1566943872}
   - component: {fileID: 1566943871}
+  - component: {fileID: 1566943876}
   m_Layer: 0
   m_Name: Target
   m_TagString: Team2
@@ -1164,6 +1178,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1566943876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566943870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 555f90c51ff5a804c84160539ee556ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterData: {fileID: 11400000, guid: 78ff13af6a3230b4aaac53793af803db, type: 2}
 --- !u!1 &1641093141
 GameObject:
   m_ObjectHideFlags: 0
@@ -1362,7 +1389,7 @@ GameObject:
   - component: {fileID: 1722012684}
   m_Layer: 0
   m_Name: Snowball
-  m_TagString: Untagged
+  m_TagString: snowball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1672,6 +1699,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 533667af283d18a4f863a4cebda6ad24, type: 3}
       insertIndex: -1
       addedObject: {fileID: 125801598}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 533667af283d18a4f863a4cebda6ad24, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 125801599}
   m_SourcePrefab: {fileID: 100100000, guid: 533667af283d18a4f863a4cebda6ad24, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

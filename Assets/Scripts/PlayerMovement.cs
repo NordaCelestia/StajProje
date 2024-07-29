@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Transform cameraTransform;
     [SerializeField] Animator CharacterAnimator;
     [SerializeField] GameObject AnimationControl;
+    
 
     private float movementSpeed;
     private Rigidbody rb;
