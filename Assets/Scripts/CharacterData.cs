@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
+
+
 
 public class CharacterData : MonoBehaviour
 {
     [SerializeField] private CharacterDataScriptableObject characterData;
     [SerializeField] Image hpBar;
-    [SerializeField] GameObject healthBar;
-    [SerializeField] UnityEvent isDead;
+    [SerializeField] GameObject healthBar,GameOverManagaer;
 
+    isGameOver isGameOver;
     float healthPercentage;
     private int currentHealth;
 
@@ -21,7 +22,7 @@ public class CharacterData : MonoBehaviour
 
     private void Start()
     {
-       
+        isGameOver = GameOverManagaer.GetComponent<isGameOver>();
         currentHealth = characterData.maxHealth;
     }
 
@@ -36,6 +37,11 @@ public class CharacterData : MonoBehaviour
         {
             TakeDamage();
         }
+
+        if (isGameOver.isPlaying == false && currentHealth > 0)
+        {
+            isGameOver.EndTheGame(characterData.characterName);
+        }
     }
 
     public void TakeDamage()
@@ -43,10 +49,16 @@ public class CharacterData : MonoBehaviour
         currentHealth -= 1;
         Debug.Log(characterData.characterName + " takes damage! remaining health: " + currentHealth);
         UpdateUI();
+
         if (currentHealth <= 0)
         {
-            isDead.Invoke();
+            isGameOver.EndTheGame();
         }
+
+
+        
+       
+        
     }
 
     public void UpdateUI()

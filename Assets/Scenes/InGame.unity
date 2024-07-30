@@ -520,21 +520,7 @@ MonoBehaviour:
   characterData: {fileID: 11400000, guid: 521d518a529cdad4788f29c22b827076, type: 2}
   hpBar: {fileID: 171832258}
   healthBar: {fileID: 171832255}
-  isDead:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1773846394}
-        m_TargetAssemblyTypeName: isGameOver, Assembly-CSharp
-        m_MethodName: EndTheGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  GameOverManagaer: {fileID: 1773846393}
 --- !u!1 &132022705
 GameObject:
   m_ObjectHideFlags: 0
@@ -2341,21 +2327,7 @@ MonoBehaviour:
   characterData: {fileID: 11400000, guid: 78ff13af6a3230b4aaac53793af803db, type: 2}
   hpBar: {fileID: 1842089413}
   healthBar: {fileID: 634793411}
-  isDead:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1773846394}
-        m_TargetAssemblyTypeName: isGameOver, Assembly-CSharp
-        m_MethodName: EndTheGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  GameOverManagaer: {fileID: 1773846393}
 --- !u!114 &1566943877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2851,6 +2823,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameOverScreen: {fileID: 18511948}
+  winnerText: {fileID: 285154494}
 --- !u!4 &1773846395
 Transform:
   m_ObjectHideFlags: 0

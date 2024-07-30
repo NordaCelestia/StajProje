@@ -5,5 +5,6 @@ public class CharacterDataScriptableObject : ScriptableObject
 {
     public string characterName;
     public int maxHealth = 3;
+    public bool isDead;
 }
 
