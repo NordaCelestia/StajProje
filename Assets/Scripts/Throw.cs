@@ -11,10 +11,16 @@ public class Throw : MonoBehaviour
     [SerializeField] GameObject AnimationControl;
     [SerializeField] Rigidbody SnowballRB;
     [SerializeField] Image UISnowballRenderer;
-    [SerializeField] float snowballSpeed = 30;
+    [SerializeField] float snowballSpeed = 45;
+    [SerializeField] Camera mainCamera;
+    [SerializeField] float cameraSmoothSpeed = 1.0f;
+    [SerializeField] Vector3 cameraOffset = new Vector3(0, 0, -5);
+    [SerializeField] float initialXRotation = 10f; 
+    [SerializeField] float leadFactor = 0.5f; 
 
     bool firstRun;
     private Transform targetTransform;
+    private Rigidbody targetRigidbody;
 
     private void Start()
     {
@@ -22,12 +28,17 @@ public class Throw : MonoBehaviour
         SnowballRB = Snowball.GetComponent<Rigidbody>();
         UIUpdate(1f);
         ThrowSnowball();
+
+        // Kameranýn baþlangýç x rotasyonunu ayarla
+        Vector3 eulerRotation = mainCamera.transform.rotation.eulerAngles;
+        eulerRotation.x = initialXRotation;
+        mainCamera.transform.rotation = Quaternion.Euler(eulerRotation);
     }
 
     void Update()
     {
         FindTarget();
-        
+        UpdateCamera();
     }
 
     void FindTarget()
@@ -36,23 +47,23 @@ public class Throw : MonoBehaviour
         if (target != null)
         {
             targetTransform = target.transform;
+            targetRigidbody = target.GetComponent<Rigidbody>();
         }
         else
         {
             targetTransform = null;
+            targetRigidbody = null;
             Debug.LogWarning("Target with tag 'Team2' not found.");
         }
     }
 
     void ThrowSnowball()
     {
-            StartCoroutine(animationTransition());
-            
+        StartCoroutine(animationTransition());
     }
 
     IEnumerator animationTransition() // Animasyonlar arasý geçiþ
     {
-
         if (firstRun)
         {
             firstRun = false;
@@ -71,7 +82,6 @@ public class Throw : MonoBehaviour
             CharacterAnimator.SetTrigger("isThrowing");
             StartCoroutine(delayedThrow());
         }
-
     }
 
     IEnumerator delayedThrow() // Animasyonda kolun kalkmasý için bekliyor
@@ -89,8 +99,16 @@ public class Throw : MonoBehaviour
         if (targetTransform != null)
         {
             Vector3 targetCenter = targetTransform.position;
-            // Hedefin y-ekseni yüksekliðini ortalayarak atýþý düzeltin
+
             targetCenter.y = throwPosition.transform.position.y;
+
+            
+            if (targetRigidbody != null)
+            {
+                Vector3 predictedPosition = targetCenter + targetRigidbody.velocity * leadFactor;
+                targetCenter = predictedPosition;
+            }
+
             Vector3 throwDirection = (targetCenter - throwPosition.transform.position).normalized;
             Vector3 force = throwDirection * snowballSpeed;
             SnowballRB.AddForce(force, ForceMode.VelocityChange);
@@ -104,6 +122,22 @@ public class Throw : MonoBehaviour
         UIUpdate(1f);
 
         StartCoroutine(animationTransition());
+    }
+
+    void UpdateCamera()
+    {
+        if (targetTransform != null && mainCamera != null)
+        {
+            Vector3 targetPosition = targetTransform.position + cameraOffset; // Kamerayý hedefe göre ofsetle ayarla
+            Vector3 direction = targetPosition - mainCamera.transform.position;
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+            Vector3 eulerRotation = targetRotation.eulerAngles;
+            eulerRotation.x = mainCamera.transform.rotation.eulerAngles.x; // X eksenindeki rotasyonu sabit tut
+            targetRotation = Quaternion.Euler(eulerRotation);
+
+            mainCamera.transform.rotation = Quaternion.Slerp(mainCamera.transform.rotation, targetRotation, Time.deltaTime * cameraSmoothSpeed);
+        }
     }
 
     void UIUpdate(float alpha)
