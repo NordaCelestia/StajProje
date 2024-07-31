@@ -5,10 +5,8 @@ using UnityEngine.UI;
 
 public class Throw : MonoBehaviour
 {
-    [SerializeField] GameObject throwPosition;
-    [SerializeField] Animator CharacterAnimator;
-    [SerializeField] GameObject Snowball;
-    [SerializeField] GameObject AnimationControl;
+    [SerializeField] GameObject throwPosition, Snowball, AnimationControl, AudioManager;
+    [SerializeField] Animator CharacterAnimator; 
     [SerializeField] Rigidbody SnowballRB;
     [SerializeField] Image UISnowballRenderer;
     [SerializeField] float snowballSpeed = 45;
@@ -19,12 +17,15 @@ public class Throw : MonoBehaviour
     [SerializeField] float leadFactor = 0.5f;
 
     bool firstRun;
+    byte throwSfxRandom;
+    SFX sfxManager;
     private Transform targetTransform;
     private Rigidbody targetRigidbody;
 
     private void Start()
     {
         firstRun = true;
+        sfxManager = AudioManager.GetComponent<SFX>();
         SnowballRB = Snowball.GetComponent<Rigidbody>();
         UIUpdate(1f);
         ThrowSnowball();
@@ -87,6 +88,9 @@ public class Throw : MonoBehaviour
     IEnumerator delayedThrow() // Animasyonda kolun kalkmasý için bekliyor
     {
         yield return new WaitForSeconds(0.3f);
+        throwSfxRandom = (byte)Random.Range(0,3);
+
+        sfxManager.PlaySound(throwSfxRandom);
 
         UIUpdate(0.4f);
 

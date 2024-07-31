@@ -9,11 +9,12 @@ public class CharacterData : MonoBehaviour
 {
     [SerializeField] private CharacterDataScriptableObject characterData;
     [SerializeField] Image hpBar;
-    [SerializeField] GameObject healthBar,GameOverManagaer;
+    [SerializeField] GameObject healthBar,GameOverManagaer, AudioManager;
 
     isGameOver isGameOver;
     float healthPercentage;
     private int currentHealth;
+    SFX sfxManager;
 
     private void Awake()
     {
@@ -22,6 +23,7 @@ public class CharacterData : MonoBehaviour
 
     private void Start()
     {
+        sfxManager = AudioManager.GetComponent<SFX>();
         isGameOver = GameOverManagaer.GetComponent<isGameOver>();
         currentHealth = characterData.maxHealth;
     }
@@ -46,6 +48,7 @@ public class CharacterData : MonoBehaviour
 
     public void TakeDamage()
     {
+        sfxManager.PlaySound(3);
         currentHealth -= 1;
         Debug.Log(characterData.characterName + " takes damage! remaining health: " + currentHealth);
         UpdateUI();

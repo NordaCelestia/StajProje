@@ -6,12 +6,13 @@ using TMPro;
 
 public class isGameOver : MonoBehaviour
 {
-    [SerializeField] GameObject GameOverScreen;
+    [SerializeField] GameObject GameOverScreen,AudioManager;
     [SerializeField] TMP_Text winnerText;
 
     public static isGameOver instance;
     private string winnerName;
     public bool isPlaying;
+    SFX sfxManager;
 
     private void Awake()
     {
@@ -28,6 +29,11 @@ public class isGameOver : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        sfxManager = AudioManager.GetComponent<SFX>();
+    }
+
     public void EndTheGame()
     {
         Cursor.visible = true;
@@ -39,7 +45,9 @@ public class isGameOver : MonoBehaviour
 
     public void EndTheGame(string winnerName)
     {
-        
+        sfxManager.PlaySound(4);
+        //sfxManager.PlaySound(5);
+
         winnerText.text = "Winner: "+ winnerName;
         Time.timeScale = 0f;
     }
