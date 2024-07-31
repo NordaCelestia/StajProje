@@ -51,7 +51,7 @@ public class isGameOver : MonoBehaviour
 
     public void MainMenuButton()
     {
-
+        SceneManager.LoadScene("MainMenu");
     }
 
 }

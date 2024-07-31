@@ -13,10 +13,10 @@ public class Throw : MonoBehaviour
     [SerializeField] Image UISnowballRenderer;
     [SerializeField] float snowballSpeed = 45;
     [SerializeField] Camera mainCamera;
-    [SerializeField] float cameraSmoothSpeed = 1.0f;
-    [SerializeField] Vector3 cameraOffset = new Vector3(0, 0, -5);
-    [SerializeField] float initialXRotation = 10f; 
-    [SerializeField] float leadFactor = 0.5f; 
+    [SerializeField] float cameraSmoothSpeed = 0.7f;
+    [SerializeField] Vector3 cameraOffset = new Vector3(0, 2, -10); 
+    [SerializeField] float initialXRotation = 30f;
+    [SerializeField] float leadFactor = 0.5f;
 
     bool firstRun;
     private Transform targetTransform;
@@ -102,7 +102,6 @@ public class Throw : MonoBehaviour
 
             targetCenter.y = throwPosition.transform.position.y;
 
-            
             if (targetRigidbody != null)
             {
                 Vector3 predictedPosition = targetCenter + targetRigidbody.velocity * leadFactor;
@@ -128,12 +127,12 @@ public class Throw : MonoBehaviour
     {
         if (targetTransform != null && mainCamera != null)
         {
-            Vector3 targetPosition = targetTransform.position + cameraOffset; // Kamerayý hedefe göre ofsetle ayarla
+            Vector3 targetPosition = targetTransform.position + cameraOffset; 
             Vector3 direction = targetPosition - mainCamera.transform.position;
             Quaternion targetRotation = Quaternion.LookRotation(direction);
 
             Vector3 eulerRotation = targetRotation.eulerAngles;
-            eulerRotation.x = mainCamera.transform.rotation.eulerAngles.x; // X eksenindeki rotasyonu sabit tut
+            eulerRotation.x = mainCamera.transform.rotation.eulerAngles.x; 
             targetRotation = Quaternion.Euler(eulerRotation);
 
             mainCamera.transform.rotation = Quaternion.Slerp(mainCamera.transform.rotation, targetRotation, Time.deltaTime * cameraSmoothSpeed);
