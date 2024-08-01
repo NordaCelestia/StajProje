@@ -8,7 +8,11 @@ public class VFXDestroy : MonoBehaviour
 
     void Start()
     {
+        if (!this.gameObject.CompareTag("Parent"))
+        {
             Destroy(gameObject, secondsToSuicide);
+        }
+            
     }
 
     

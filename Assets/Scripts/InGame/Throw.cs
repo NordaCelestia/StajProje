@@ -88,22 +88,23 @@ public class Throw : MonoBehaviour
     IEnumerator delayedThrow() // Animasyonda kolun kalkmasý için bekliyor
     {
         yield return new WaitForSeconds(0.3f);
-        throwSfxRandom = (byte)Random.Range(0,3);
+        throwSfxRandom = (byte)Random.Range(0, 3);
 
         sfxManager.PlaySound(throwSfxRandom);
 
         UIUpdate(0.4f);
 
-        Snowball.SetActive(true);
-        Snowball.transform.position = throwPosition.transform.position;
+       
+        GameObject snowballInstance = Instantiate(Snowball, throwPosition.transform.position, Quaternion.identity);
+        Rigidbody snowballRb = snowballInstance.GetComponent<Rigidbody>();
 
-        SnowballRB.velocity = Vector3.zero;
-        SnowballRB.angularVelocity = Vector3.zero;
+        
+        snowballRb.velocity = Vector3.zero;
+        snowballRb.angularVelocity = Vector3.zero;
 
         if (targetTransform != null)
         {
             Vector3 targetCenter = targetTransform.position;
-
             targetCenter.y = throwPosition.transform.position.y;
 
             if (targetRigidbody != null)
@@ -114,7 +115,7 @@ public class Throw : MonoBehaviour
 
             Vector3 throwDirection = (targetCenter - throwPosition.transform.position).normalized;
             Vector3 force = throwDirection * snowballSpeed;
-            SnowballRB.AddForce(force, ForceMode.VelocityChange);
+            snowballRb.AddForce(force, ForceMode.VelocityChange);
         }
         else
         {
@@ -126,7 +127,6 @@ public class Throw : MonoBehaviour
 
         StartCoroutine(animationTransition());
     }
-
     void UpdateCamera()
     {
         if (targetTransform != null && mainCamera != null)
