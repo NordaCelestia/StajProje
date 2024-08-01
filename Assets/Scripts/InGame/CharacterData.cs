@@ -7,7 +7,7 @@ public class CharacterData : MonoBehaviour
 {
     [SerializeField] private CharacterDataScriptableObject characterData;
     [SerializeField] Image hpBar;
-    [SerializeField] GameObject healthBar, GameOverManager, AudioManager;
+    [SerializeField] GameObject healthBar, GameOverManager, AudioManager, damageVFXPrefab;
 
     isGameOver isGameOver;
     float healthPercentage;
@@ -45,6 +45,8 @@ public class CharacterData : MonoBehaviour
         currentHealth -= 1;
         Debug.Log(characterData.characterName + " takes damage! remaining health: " + currentHealth);
         UpdateUI();
+
+        Instantiate(damageVFXPrefab, transform.position, Quaternion.identity); //damage VFX
 
         if (currentHealth <= 0)
         {
