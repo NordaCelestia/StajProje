@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-
 public class CharacterData : MonoBehaviour
 {
     [SerializeField] private CharacterDataScriptableObject characterData;
     [SerializeField] Image hpBar;
-    [SerializeField] GameObject healthBar,GameOverManagaer, AudioManager;
+    [SerializeField] GameObject healthBar, GameOverManager, AudioManager;
 
     isGameOver isGameOver;
     float healthPercentage;
@@ -24,25 +22,20 @@ public class CharacterData : MonoBehaviour
     private void Start()
     {
         sfxManager = AudioManager.GetComponent<SFX>();
-        isGameOver = GameOverManagaer.GetComponent<isGameOver>();
+        isGameOver = GameOverManager.GetComponent<isGameOver>();
+        isGameOver.RegisterCharacter(this); // Karakteri kaydet
         currentHealth = characterData.maxHealth;
     }
 
     private void Update()
     {
-        
         Vector3 newPosition = healthBar.transform.position;
         newPosition.x = this.gameObject.transform.position.x;
         healthBar.transform.position = newPosition;
 
-        if (Input.GetKeyDown(KeyCode.O)) //test damage
+        if (Input.GetKeyDown(KeyCode.O)) // Test damage
         {
             TakeDamage();
-        }
-
-        if (isGameOver.isPlaying == false && currentHealth > 0)
-        {
-            isGameOver.EndTheGame(characterData.characterName);
         }
     }
 
@@ -55,13 +48,8 @@ public class CharacterData : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            isGameOver.EndTheGame();
+            isGameOver.CharacterDied(this); // Karakter öldüðünde bildir
         }
-
-
-        
-       
-        
     }
 
     public void UpdateUI()
@@ -70,8 +58,6 @@ public class CharacterData : MonoBehaviour
         hpBar.fillAmount = healthPercentage;
     }
 
-   
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("snowball"))
@@ -79,5 +65,10 @@ public class CharacterData : MonoBehaviour
             TakeDamage();
             collision.gameObject.SetActive(false);
         }
+    }
+
+    public string GetCharacterName()
+    {
+        return characterData.characterName;
     }
 }

@@ -6,19 +6,22 @@ using TMPro;
 
 public class isGameOver : MonoBehaviour
 {
-    [SerializeField] GameObject GameOverScreen,AudioManager;
+    [SerializeField] GameObject GameOverScreen, AudioManager;
     [SerializeField] TMP_Text winnerText;
 
     public static isGameOver instance;
     private string winnerName;
     public bool isPlaying;
     SFX sfxManager;
+    private bool gameEnded; // Oyun bitip bitmediðini kontrol etmek için bayrak
+
+    private List<CharacterData> characters = new List<CharacterData>();
 
     private void Awake()
     {
-
         isPlaying = true;
-        //singleton
+        gameEnded = false; // Baþlangýçta oyun bitmemiþ
+        // Singleton
         if (instance == null)
         {
             instance = this;
@@ -34,32 +37,50 @@ public class isGameOver : MonoBehaviour
         sfxManager = AudioManager.GetComponent<SFX>();
     }
 
-    public void EndTheGame()
+    public void RegisterCharacter(CharacterData character)
     {
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
-        GameOverScreen.SetActive(true);
-        isPlaying = false;
-        
+        characters.Add(character);
+    }
+
+    public void CharacterDied(CharacterData deadCharacter)
+    {
+        characters.Remove(deadCharacter);
+        if (characters.Count == 1)
+        {
+            EndTheGame(characters[0].GetCharacterName());
+        }
+        else if (characters.Count == 0)
+        {
+            EndTheGame("No winner");
+        }
     }
 
     public void EndTheGame(string winnerName)
     {
-        sfxManager.PlaySound(4);
-        //sfxManager.PlaySound(5);
+        if (gameEnded) return; // Eðer oyun zaten bitmiþse, metodu çalýþtýrma
+        gameEnded = true; // Oyun bitti olarak iþaretle
 
-        winnerText.text = "Winner: "+ winnerName;
-        Time.timeScale = 0f;
+        sfxManager.PlaySound(4);
+        sfxManager.PlaySound(5);
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        GameOverScreen.SetActive(true);
+        isPlaying = false;
+
+        winnerText.text = "Winner: " + winnerName;
+        Time.timeScale = 0f; // Zamaný durdur
     }
 
     public void ReMatchButton()
     {
+        Time.timeScale = 1f; // Zamaný yeniden baþlat
         SceneManager.LoadScene("InGame");
     }
 
     public void MainMenuButton()
     {
+        Time.timeScale = 1f; // Zamaný yeniden baþlat
         SceneManager.LoadScene("MainMenu");
     }
-
 }

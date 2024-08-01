@@ -8,18 +8,7 @@ public class SFX : MonoBehaviour
     private AudioSource[] audioSources; 
 
     private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
-        
+    {   
         audioSources = new AudioSource[audioClips.Length];
         for (int i = 0; i < audioClips.Length; i++)
         {

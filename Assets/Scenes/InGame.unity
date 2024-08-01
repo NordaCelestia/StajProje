@@ -520,7 +520,7 @@ MonoBehaviour:
   characterData: {fileID: 11400000, guid: 521d518a529cdad4788f29c22b827076, type: 2}
   hpBar: {fileID: 171832258}
   healthBar: {fileID: 171832255}
-  GameOverManagaer: {fileID: 1773846393}
+  GameOverManager: {fileID: 1773846393}
   AudioManager: {fileID: 1446084794}
 --- !u!1 &132022705
 GameObject:
@@ -2489,7 +2489,7 @@ MonoBehaviour:
   characterData: {fileID: 11400000, guid: 78ff13af6a3230b4aaac53793af803db, type: 2}
   hpBar: {fileID: 1842089413}
   healthBar: {fileID: 634793411}
-  GameOverManagaer: {fileID: 1773846393}
+  GameOverManager: {fileID: 1773846393}
   AudioManager: {fileID: 1446084794}
 --- !u!114 &1566943877
 MonoBehaviour:
@@ -2997,7 +2997,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1773846393}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
