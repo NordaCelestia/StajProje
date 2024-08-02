@@ -9,10 +9,7 @@ public class Throw : MonoBehaviour
     [SerializeField] Animator CharacterAnimator;
     [SerializeField] float snowballSpeed = 45;
     [SerializeField] Rigidbody SnowballRB;
-    [SerializeField] Camera mainCamera;
-    [SerializeField] float cameraSmoothSpeed = 0.7f;
-    [SerializeField] Vector3 cameraOffset = new Vector3(0, 2, -10);
-    [SerializeField] float initialXRotation = 30f;
+    [SerializeField] Vector3 cameraOffset = new Vector3(0, 5, -10); // Kamera offseti
     [SerializeField] float leadFactor = 0.5f;
 
     bool firstRun;
@@ -22,6 +19,7 @@ public class Throw : MonoBehaviour
     private Rigidbody targetRigidbody;
     private bool isPlayer;
     private string enemyTag;
+    private Quaternion initialCameraRotation;
 
     private void Start()
     {
@@ -30,10 +28,8 @@ public class Throw : MonoBehaviour
         SnowballRB = Snowball.GetComponent<Rigidbody>();
         ThrowSnowball();
 
-        // Kameranýn baþlangýç x rotasyonunu ayarla
-        Vector3 eulerRotation = mainCamera.transform.rotation.eulerAngles;
-        eulerRotation.x = initialXRotation;
-        mainCamera.transform.rotation = Quaternion.Euler(eulerRotation);
+        // Kameranýn baþlangýç x rotasyonunu ve rotasýný ayarla
+     
 
         // Karakterin oyuncu olup olmadýðýný kontrol et
         isPlayer = gameObject.CompareTag("Player");
@@ -45,10 +41,7 @@ public class Throw : MonoBehaviour
     void Update()
     {
         FindTarget();
-        if (isPlayer && targetTransform != null)
-        {
-            UpdateCamera();
-        }
+       
     }
 
     void DetermineEnemyTag()
@@ -169,19 +162,6 @@ public class Throw : MonoBehaviour
         StartCoroutine(animationTransition());
     }
 
-    void UpdateCamera()
-    {
-        if (targetTransform != null && mainCamera != null)
-        {
-            Vector3 targetPosition = targetTransform.position + cameraOffset;
-            Vector3 direction = targetPosition - mainCamera.transform.position;
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
 
-            Vector3 eulerRotation = targetRotation.eulerAngles;
-            eulerRotation.x = mainCamera.transform.rotation.eulerAngles.x;
-            targetRotation = Quaternion.Euler(eulerRotation);
-
-            mainCamera.transform.rotation = Quaternion.Slerp(mainCamera.transform.rotation, targetRotation, Time.deltaTime * cameraSmoothSpeed);
-        }
-    }
+    
 }
