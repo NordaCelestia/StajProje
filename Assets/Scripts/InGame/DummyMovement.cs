@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DummyMovement : MonoBehaviour
 {
+    [SerializeField] Animator CharacterAnimator;
+
     private Rigidbody rigidBodyDummy;
 
     int randomVar;
@@ -13,6 +15,29 @@ public class DummyMovement : MonoBehaviour
     {
         rigidBodyDummy = GetComponent<Rigidbody>();
         StartCoroutine(dummyMove());
+    }
+
+    private void Update()
+    {
+        CharacterAnim();
+    }
+
+    void CharacterAnim()   //Karakterin hýzýný saða ve sola göre negatif veya pozitif olarak hesapalayýp bunu animatöre vermek
+    {
+
+        float MovementVariable = rigidBodyDummy.velocity.x;
+        if (MovementVariable == 0)
+        {
+            CharacterAnimator.SetBool("isMoving", false);
+        }
+        else
+        {
+            CharacterAnimator.SetBool("isMoving", true);
+        }
+
+
+
+        CharacterAnimator.SetFloat("MovementVariable", MovementVariable);
     }
 
     IEnumerator dummyMove()
@@ -29,7 +54,7 @@ public class DummyMovement : MonoBehaviour
                 speed = -1;
             }
 
-            Vector3 force = new Vector3(speed, 0f, 0f) * 5;
+            Vector3 force = new Vector3(speed, 0f, 0f) * 2;
             float applyForceDuration = 2.0f; 
             float startTime = Time.time;
 
