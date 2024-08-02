@@ -21,6 +21,7 @@ public class Throw : MonoBehaviour
     private Transform targetTransform;
     private Rigidbody targetRigidbody;
     private bool isPlayer;
+    private string enemyTag;
 
     private void Start()
     {
@@ -36,6 +37,9 @@ public class Throw : MonoBehaviour
 
         // Karakterin oyuncu olup olmadýðýný kontrol et
         isPlayer = gameObject.CompareTag("Player");
+
+        // Enemy tag belirle
+        DetermineEnemyTag();
     }
 
     void Update()
@@ -47,20 +51,58 @@ public class Throw : MonoBehaviour
         }
     }
 
-    void FindTarget()
+    void DetermineEnemyTag()
     {
-        string enemyTag = (this.gameObject.CompareTag("Team1")) ? "Team2" : "Player";
-        GameObject target = GameObject.FindWithTag(enemyTag);
-        if (target != null)
+        if (gameObject.CompareTag("Player"))
         {
-            targetTransform = target.transform;
-            targetRigidbody = target.GetComponent<Rigidbody>();
+            enemyTag = "Team2";
+            Debug.Log("Player is looking for targets with tag 'Team2'.");
+        }
+        else if (gameObject.CompareTag("Team2"))
+        {
+            enemyTag = "Player";
+            Debug.Log("Team2 is looking for targets with tag 'Player'.");
         }
         else
         {
-            targetTransform = null;
-            targetRigidbody = null;
+            Debug.LogWarning("GameObject does not have a valid tag for targeting.");
+        }
+    }
+
+    void FindTarget()
+    {
+        if (string.IsNullOrEmpty(enemyTag))
+        {
+            Debug.LogWarning("Enemy tag is not set. Cannot find target.");
+            return;
+        }
+
+        GameObject[] targets = GameObject.FindGameObjectsWithTag(enemyTag);
+        Debug.Log("Found " + targets.Length + " targets with tag '" + enemyTag + "'.");
+
+        float closestDistance = Mathf.Infinity;
+
+        foreach (GameObject potentialTarget in targets)
+        {
+            if (potentialTarget != this.gameObject) // Kendini hedef olarak seçme
+            {
+                float distanceToTarget = (potentialTarget.transform.position - transform.position).sqrMagnitude;
+                if (distanceToTarget < closestDistance)
+                {
+                    closestDistance = distanceToTarget;
+                    targetTransform = potentialTarget.transform;
+                    targetRigidbody = potentialTarget.GetComponent<Rigidbody>();
+                }
+            }
+        }
+
+        if (targetTransform == null)
+        {
             Debug.LogWarning("Target with tag '" + enemyTag + "' not found.");
+        }
+        else
+        {
+            Debug.Log("Target acquired: " + targetTransform.gameObject.name);
         }
     }
 

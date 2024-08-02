@@ -536,7 +536,7 @@ GameObject:
   - component: {fileID: 132022708}
   m_Layer: 0
   m_Name: SnowballPosition
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2134,8 +2134,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.52832115, y: 1.0605496, z: 0.4383957}
-  m_Center: {x: -0.021163631, y: 0.88095194, z: -0.01101241}
+  m_Size: {x: 0.52832115, y: 1.3275819, z: 0.4383957}
+  m_Center: {x: -0.021163631, y: 1.0144707, z: -0.01101241}
 --- !u!4 &1315660393 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 48c0ffa24f9cfd94aad480085ea471e8, type: 3}
