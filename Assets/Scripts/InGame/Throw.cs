@@ -7,13 +7,13 @@ public class Throw : MonoBehaviour
 {
     [SerializeField] GameObject throwPosition, Snowball, AnimationControl, AudioManager;
     [SerializeField] Animator CharacterAnimator;
-    [SerializeField] float snowballSpeed = 70;
+    float snowballSpeed = 80;
     [SerializeField] Rigidbody SnowballRB;
     [SerializeField] Vector3 cameraOffset = new Vector3(0, 5, -10); // Kamera offseti
-    [SerializeField] float leadFactor = 0.17f;
+    [SerializeField] float leadFactor = 0.5f;
 
     bool firstRun;
-    byte throwSfxRandom;
+    byte throwSfxRandom, throwCooldownRandom;
     SFX sfxManager;
     private Transform targetTransform;
     private Rigidbody targetRigidbody;
@@ -117,6 +117,7 @@ public class Throw : MonoBehaviour
         }
         else
         {
+            
             CharacterAnimator.SetTrigger("GrabSnowball");
             yield return new WaitForSeconds(1.1f);
             CharacterAnimator.SetTrigger("isThrowing");
@@ -156,8 +157,8 @@ public class Throw : MonoBehaviour
         {
             Debug.LogWarning("Target transform is not set. Snowball will not be thrown.");
         }
-
-        yield return new WaitForSeconds(2f);
+        throwCooldownRandom = (byte)Random.Range(1.5f, 2f);
+        yield return new WaitForSeconds(throwCooldownRandom);
 
         StartCoroutine(animationTransition());
     }

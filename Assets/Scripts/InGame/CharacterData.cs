@@ -46,7 +46,7 @@ public class CharacterData : MonoBehaviour
         Debug.Log(characterData.characterName + " takes damage! remaining health: " + currentHealth);
         UpdateUI();
 
-        Instantiate(damageVFXPrefab, transform.position, Quaternion.identity); //damage VFX
+        Instantiate(damageVFXPrefab, this.gameObject.transform.position, Quaternion.identity); //damage VFX
 
         if (currentHealth <= 0)
         {
