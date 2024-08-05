@@ -55,7 +55,7 @@ public class DummyMovement : MonoBehaviour
             }
 
             Vector3 force = new Vector3(speed, 0f, 0f) * 2;
-            float applyForceDuration = 2.0f; 
+            float applyForceDuration = 1.4f; 
             float startTime = Time.time;
 
             while (Time.time < startTime + applyForceDuration)
@@ -67,13 +67,13 @@ public class DummyMovement : MonoBehaviour
             Vector3 velocity = rigidBodyDummy.velocity;
             velocity.y = 0f;
 
-            if (velocity.magnitude > 15)
+            if (velocity.magnitude > 10)
             {
-                rigidBodyDummy.velocity = velocity.normalized * 15;
+                rigidBodyDummy.velocity = velocity.normalized * 10;
             }
 
             
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1f);
         }
     }
 }

@@ -7,10 +7,10 @@ public class Throw : MonoBehaviour
 {
     [SerializeField] GameObject throwPosition, Snowball, AnimationControl, AudioManager;
     [SerializeField] Animator CharacterAnimator;
-    [SerializeField] float snowballSpeed = 45;
+    [SerializeField] float snowballSpeed = 70;
     [SerializeField] Rigidbody SnowballRB;
     [SerializeField] Vector3 cameraOffset = new Vector3(0, 5, -10); // Kamera offseti
-    [SerializeField] float leadFactor = 0.5f;
+    [SerializeField] float leadFactor = 0.17f;
 
     bool firstRun;
     byte throwSfxRandom;
