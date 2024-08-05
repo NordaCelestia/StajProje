@@ -157,7 +157,7 @@ public class Throw : MonoBehaviour
         {
             Debug.LogWarning("Target transform is not set. Snowball will not be thrown.");
         }
-        throwCooldownRandom = (byte)Random.Range(1.5f, 2f);
+        throwCooldownRandom = (byte)Random.Range(1.7f, 2f);
         yield return new WaitForSeconds(throwCooldownRandom);
 
         StartCoroutine(animationTransition());
