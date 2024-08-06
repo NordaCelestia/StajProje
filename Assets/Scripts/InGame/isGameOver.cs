@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Linq; // Linq kütüphanesini ekleyelim
 
 public class isGameOver : MonoBehaviour
 {
@@ -45,9 +46,18 @@ public class isGameOver : MonoBehaviour
     public void CharacterDied(CharacterData deadCharacter)
     {
         characters.Remove(deadCharacter);
-        if (characters.Count == 1)
+
+        // Karakterleri takým tag'ine göre gruplara ayýrarak kontrol edelim
+        var team1 = characters.Where(c => c.GetTeamTag() == "Team1" || c.GetTeamTag() == "Player").ToList();
+        var team2 = characters.Where(c => c.GetTeamTag() == "Team2").ToList();
+
+        if (team1.Count == 0)
         {
-            EndTheGame(characters[0].GetCharacterName());
+            EndTheGame("Team 2");
+        }
+        else if (team2.Count == 0)
+        {
+            EndTheGame("Team 1");
         }
         else if (characters.Count == 0)
         {

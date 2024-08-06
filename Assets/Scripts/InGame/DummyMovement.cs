@@ -10,14 +10,14 @@ public class DummyMovement : MonoBehaviour
 
     private float speed = 10f;
     private float direction = 1f;
-    private float changeDirectionInterval = 1f;
+    private float changeDirectionInterval;
     private float nextDirectionChangeTime = 0f;
-    private float maxSpeed = 10f; // Maksimum hýz
 
     private void Start()
     {
         rigidBodyDummy = GetComponent<Rigidbody>();
         StartCoroutine(dummyMove());
+        SetRandomDirectionAndInterval();
     }
 
     private void Update()
@@ -45,11 +45,8 @@ public class DummyMovement : MonoBehaviour
     {
         while (true)
         {
-            if (rigidBodyDummy.velocity.magnitude < maxSpeed)
-            {
-                Vector3 force = new Vector3(direction * speed, 0f, 0f);
-                rigidBodyDummy.AddForce(force, ForceMode.VelocityChange);
-            }
+            Vector3 force = new Vector3(direction * speed, 0f, 0f);
+            rigidBodyDummy.AddForce(force, ForceMode.VelocityChange);
 
             yield return new WaitForSeconds(changeDirectionInterval);
         }
@@ -60,9 +57,17 @@ public class DummyMovement : MonoBehaviour
         if (Time.time >= nextDirectionChangeTime)
         {
             direction = Random.Range(0, 2) == 0 ? -1f : 1f;
+            rigidBodyDummy.velocity = Vector3.zero;
+
+            SetRandomDirectionAndInterval();
 
             nextDirectionChangeTime = Time.time + changeDirectionInterval;
         }
+    }
+
+    private void SetRandomDirectionAndInterval()
+    {
+        changeDirectionInterval = Random.Range(1f, 3f); // 1 ile 3 saniye arasýnda rastgele bir süre
     }
 
     private void OnCollisionEnter(Collision collision)

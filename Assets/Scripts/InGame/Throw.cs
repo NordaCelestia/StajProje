@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using Cinemachine;
 
 public class Throw : MonoBehaviour
 {
     [SerializeField] GameObject throwPosition, Snowball, AnimationControl, AudioManager;
     [SerializeField] Animator CharacterAnimator;
+    [SerializeField] CinemachineVirtualCamera cinemachineCamera; // Cinemachine Virtual Camera referansý
     float snowballSpeed = 80;
     [SerializeField] Rigidbody SnowballRB;
     [SerializeField] Vector3 cameraOffset = new Vector3(0, 5, -10); // Kamera offseti
@@ -19,7 +20,7 @@ public class Throw : MonoBehaviour
     private Rigidbody targetRigidbody;
     private bool isPlayer;
     private string enemyTag;
-    private Quaternion initialCameraRotation;
+    private Transform lastTargetTransform; // Son hedef transformunu saklamak için
 
     private void Start()
     {
@@ -28,20 +29,23 @@ public class Throw : MonoBehaviour
         SnowballRB = Snowball.GetComponent<Rigidbody>();
         ThrowSnowball();
 
-        // Kameranýn baþlangýç x rotasyonunu ve rotasýný ayarla
-     
-
-        // Karakterin oyuncu olup olmadýðýný kontrol et
         isPlayer = gameObject.CompareTag("Player");
-
-        // Enemy tag belirle
         DetermineEnemyTag();
+
+        // Kamerayý baþlangýçta oyuncuyu takip edecek þekilde ayarla
+        if (isPlayer)
+        {
+            cinemachineCamera.Follow = transform;
+            cinemachineCamera.LookAt = transform;
+
+            cinemachineCamera.transform.position = new Vector3(0, 10, -10); // Örnek konum
+            cinemachineCamera.transform.rotation = Quaternion.Euler(30, 0, 0); // Örnek rotasyon
+        }
     }
 
     void Update()
     {
         FindTarget();
-       
     }
 
     void DetermineEnemyTag()
@@ -74,6 +78,7 @@ public class Throw : MonoBehaviour
         Debug.Log("Found " + targets.Length + " targets with tag '" + enemyTag + "'.");
 
         float closestDistance = Mathf.Infinity;
+        Transform closestTarget = null;
 
         foreach (GameObject potentialTarget in targets)
         {
@@ -83,19 +88,18 @@ public class Throw : MonoBehaviour
                 if (distanceToTarget < closestDistance)
                 {
                     closestDistance = distanceToTarget;
-                    targetTransform = potentialTarget.transform;
+                    closestTarget = potentialTarget.transform;
                     targetRigidbody = potentialTarget.GetComponent<Rigidbody>();
                 }
             }
         }
 
-        if (targetTransform == null)
+        if (closestTarget != lastTargetTransform)
         {
-            Debug.LogWarning("Target with tag '" + enemyTag + "' not found.");
-        }
-        else
-        {
-            Debug.Log("Target acquired: " + targetTransform.gameObject.name);
+            lastTargetTransform = closestTarget;
+            targetTransform = lastTargetTransform; // Hedef transformunu güncelle
+            cinemachineCamera.LookAt = targetTransform; // Kamera hedefe bakacak þekilde ayarla
+            Debug.Log("Target acquired: " + (targetTransform != null ? targetTransform.gameObject.name : "none"));
         }
     }
 
@@ -117,7 +121,6 @@ public class Throw : MonoBehaviour
         }
         else
         {
-            
             CharacterAnimator.SetTrigger("GrabSnowball");
             yield return new WaitForSeconds(1.1f);
             CharacterAnimator.SetTrigger("isThrowing");
@@ -162,7 +165,4 @@ public class Throw : MonoBehaviour
 
         StartCoroutine(animationTransition());
     }
-
-
-    
 }

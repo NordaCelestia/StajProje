@@ -9,6 +9,7 @@ public class CharacterData : MonoBehaviour
     [SerializeField] Image hpBar;
     [SerializeField] GameObject healthBar, GameOverManager, AudioManager, damageVFXPrefab;
 
+    private string teamTag;
     isGameOver isGameOver;
     float healthPercentage;
     private int currentHealth;
@@ -16,7 +17,9 @@ public class CharacterData : MonoBehaviour
 
     private void Awake()
     {
+        
         Time.timeScale = 1f;
+        teamTag = this.gameObject.tag;
     }
 
     private void Start()
@@ -25,6 +28,11 @@ public class CharacterData : MonoBehaviour
         isGameOver = GameOverManager.GetComponent<isGameOver>();
         isGameOver.RegisterCharacter(this); // Karakteri kaydet
         currentHealth = characterData.maxHealth;
+    }
+
+    public string GetTeamTag()
+    {
+        return teamTag;
     }
 
     private void Update()
