@@ -8,8 +8,11 @@ public class DummyMovement : MonoBehaviour
 
     private Rigidbody rigidBodyDummy;
 
-    int randomVar;
-    float speed;
+    private float speed = 10f;
+    private float direction = 1f;
+    private float changeDirectionInterval = 1f;
+    private float nextDirectionChangeTime = 0f;
+    private float maxSpeed = 10f; // Maksimum hýz
 
     private void Start()
     {
@@ -20,11 +23,11 @@ public class DummyMovement : MonoBehaviour
     private void Update()
     {
         CharacterAnim();
+        CheckForDirectionChange();
     }
 
-    void CharacterAnim()   //Karakterin hýzýný saða ve sola göre negatif veya pozitif olarak hesapalayýp bunu animatöre vermek
+    void CharacterAnim()
     {
-
         float MovementVariable = rigidBodyDummy.velocity.x;
         if (MovementVariable == 0)
         {
@@ -35,8 +38,6 @@ public class DummyMovement : MonoBehaviour
             CharacterAnimator.SetBool("isMoving", true);
         }
 
-
-
         CharacterAnimator.SetFloat("MovementVariable", MovementVariable);
     }
 
@@ -44,36 +45,32 @@ public class DummyMovement : MonoBehaviour
     {
         while (true)
         {
-            randomVar = Random.Range(0, 6);
-            if (randomVar % 2 == 0)
+            if (rigidBodyDummy.velocity.magnitude < maxSpeed)
             {
-                speed = 1;
-            }
-            else
-            {
-                speed = -1;
+                Vector3 force = new Vector3(direction * speed, 0f, 0f);
+                rigidBodyDummy.AddForce(force, ForceMode.VelocityChange);
             }
 
-            Vector3 force = new Vector3(speed, 0f, 0f) * 2;
-            float applyForceDuration = 1.4f; 
-            float startTime = Time.time;
+            yield return new WaitForSeconds(changeDirectionInterval);
+        }
+    }
 
-            while (Time.time < startTime + applyForceDuration)
-            {
-                rigidBodyDummy.AddForce(force);
-                yield return null; 
-            }
+    private void CheckForDirectionChange()
+    {
+        if (Time.time >= nextDirectionChangeTime)
+        {
+            direction = Random.Range(0, 2) == 0 ? -1f : 1f;
 
-            Vector3 velocity = rigidBodyDummy.velocity;
-            velocity.y = 0f;
+            nextDirectionChangeTime = Time.time + changeDirectionInterval;
+        }
+    }
 
-            if (velocity.magnitude > 10)
-            {
-                rigidBodyDummy.velocity = velocity.normalized * 10;
-            }
-
-            
-            yield return new WaitForSeconds(1f);
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            direction = -direction;
+            rigidBodyDummy.velocity = Vector3.zero;
         }
     }
 }

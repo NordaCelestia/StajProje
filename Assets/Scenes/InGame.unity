@@ -1552,6 +1552,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: A_tribune_for_icy_spo_0805084249_refine
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 50a36b1a8e99d8b4ab8ca304bf466b13, type: 3}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3816,8 +3820,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.52832115, y: 1.3275819, z: 0.4383957}
-  m_Center: {x: -0.021163631, y: 1.0144707, z: -0.01101241}
+  m_Size: {x: 0.6661327, y: 1.3634548, z: 0.4383957}
+  m_Center: {x: -0.008775939, y: 1.0324113, z: -0.011012409}
 --- !u!4 &1315660393 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 48c0ffa24f9cfd94aad480085ea471e8, type: 3}
@@ -4341,6 +4345,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 50a36b1a8e99d8b4ab8ca304bf466b13, type: 3}
       propertyPath: m_Name
       value: A_tribune_for_icy_spo_0805084249_refine (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 50a36b1a8e99d8b4ab8ca304bf466b13, type: 3}
+      propertyPath: m_TagString
+      value: Wall
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4988,6 +4996,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: A_tribune_for_icy_spo_0805084249_refine (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 50a36b1a8e99d8b4ab8ca304bf466b13, type: 3}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5555,6 +5567,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 50a36b1a8e99d8b4ab8ca304bf466b13, type: 3}
       propertyPath: m_Name
       value: A_tribune_for_icy_spo_0805084249_refine (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 50a36b1a8e99d8b4ab8ca304bf466b13, type: 3}
+      propertyPath: m_TagString
+      value: Wall
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

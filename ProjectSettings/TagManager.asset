@@ -9,6 +9,7 @@ TagManager:
   - Team2
   - snowball
   - Parent
+  - Wall
   layers:
   - Default
   - TransparentFX
