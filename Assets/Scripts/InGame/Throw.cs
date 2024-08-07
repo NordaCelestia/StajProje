@@ -7,12 +7,13 @@ public class Throw : MonoBehaviour
 {
     [SerializeField] GameObject throwPosition, Snowball, AnimationControl, AudioManager;
     [SerializeField] Animator CharacterAnimator;
-    [SerializeField] CinemachineVirtualCamera cinemachineCamera;
-    float snowballSpeed = 80;
+    [SerializeField] CinemachineVirtualCamera cinemachineCamera; // Kamera ile ilgili kodlarý devre dýþý býrakma
+    float snowballSpeed;
     [SerializeField] Rigidbody SnowballRB;
-    [SerializeField] Vector3 cameraOffset = new Vector3(0, 5, -10);
-    [SerializeField] float leadFactor = 0.5f;
+    [SerializeField] Vector3 cameraOffset = new Vector3(0, 5, -10); // Kamera ile ilgili kodlarý devre dýþý býrakma
+    float leadFactor;
 
+    CharacterDataScriptableObject characterData;
     bool firstRun;
     byte throwSfxRandom, throwCooldownRandom;
     SFX sfxManager;
@@ -24,6 +25,7 @@ public class Throw : MonoBehaviour
 
     private void Start()
     {
+        
         firstRun = true;
         sfxManager = AudioManager.GetComponent<SFX>();
         SnowballRB = Snowball.GetComponent<Rigidbody>();
@@ -31,14 +33,17 @@ public class Throw : MonoBehaviour
 
         isPlayer = gameObject.CompareTag("Player");
         DetermineEnemyTag();
-        
 
+        
         if (isPlayer)
         {
-            cinemachineCamera.Follow = transform;
-
-            cinemachineCamera.transform.position = new Vector3(0, 10, -10);
-            cinemachineCamera.transform.rotation = Quaternion.Euler(30, 0, 0);
+            snowballSpeed = 70;
+            leadFactor = 0.5f;
+        }
+        else
+        {
+            snowballSpeed = characterData.snowballSpeed;
+            leadFactor = characterData.leadFactor;
         }
     }
 
@@ -103,27 +108,25 @@ public class Throw : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
 
+        // Kamera ile ilgili kodlarý devre dýþý býrakma
         if (isPlayer)
         {
-            
             if (!newTarget.CompareTag("Player"))
             {
                 lastTargetTransform = newTarget;
                 targetTransform = lastTargetTransform;
-                cinemachineCamera.LookAt = targetTransform;
+                // cinemachineCamera.LookAt = targetTransform;
                 Debug.Log("Target acquired: " + (targetTransform != null ? targetTransform.gameObject.name : "none"));
             }
         }
         else
         {
-            
             lastTargetTransform = newTarget;
             targetTransform = lastTargetTransform;
-            cinemachineCamera.LookAt = targetTransform;
+            // cinemachineCamera.LookAt = targetTransform;
             Debug.Log("Target acquired: " + (targetTransform != null ? targetTransform.gameObject.name : "none"));
         }
     }
-
 
     void ThrowSnowball()
     {
