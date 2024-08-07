@@ -32,9 +32,9 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
-    void Move()    //haraket
+    void Move()  
     {
-        float moveHorizontal = Input.GetAxis("Horizontal"); // Sað ve sola hareket giriþi
+        float moveHorizontal = Input.GetAxis("Horizontal"); 
 
         Vector3 force = new Vector3(moveHorizontal, 0f, 0f) * moveSpeed;
         Vector3 velocity = rb.velocity;
@@ -49,11 +49,11 @@ public class PlayerMovement : MonoBehaviour
 
         // Maksimum hýzý sýnýrla
         velocity = rb.velocity;
-        velocity.y = 0f; // Y eksenindeki hýzlarý sýfýrla
+        velocity.y = 0f; 
 
         if (velocity.magnitude > maxSpeed)
         {
-            rb.velocity = velocity.normalized * maxSpeed; // Hýzý sýnýrla
+            rb.velocity = velocity.normalized * maxSpeed; 
         }
     }
 

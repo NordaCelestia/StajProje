@@ -67,7 +67,7 @@ public class DummyMovement : MonoBehaviour
 
     private void SetRandomDirectionAndInterval()
     {
-        changeDirectionInterval = Random.Range(1f, 3f); // 1 ile 3 saniye arasýnda rastgele bir süre
+        changeDirectionInterval = Random.Range(1f, 3f); 
     }
 
     private void OnCollisionEnter(Collision collision)

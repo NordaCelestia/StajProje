@@ -23,6 +23,6 @@ public class UI : MonoBehaviour
             image.SetActive(false); 
         }
 
-        Time.timeScale = 1; // Oyunu tekrar baþlat
+        Time.timeScale = 1; 
     }
 }

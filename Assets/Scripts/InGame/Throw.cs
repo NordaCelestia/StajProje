@@ -7,10 +7,10 @@ public class Throw : MonoBehaviour
 {
     [SerializeField] GameObject throwPosition, Snowball, AnimationControl, AudioManager;
     [SerializeField] Animator CharacterAnimator;
-    [SerializeField] CinemachineVirtualCamera cinemachineCamera; // Cinemachine Virtual Camera referansý
+    [SerializeField] CinemachineVirtualCamera cinemachineCamera; 
     float snowballSpeed = 80;
     [SerializeField] Rigidbody SnowballRB;
-    [SerializeField] Vector3 cameraOffset = new Vector3(0, 5, -10); // Kamera offseti
+    [SerializeField] Vector3 cameraOffset = new Vector3(0, 5, -10);
     [SerializeField] float leadFactor = 0.5f;
 
     bool firstRun;
@@ -20,7 +20,7 @@ public class Throw : MonoBehaviour
     private Rigidbody targetRigidbody;
     private bool isPlayer;
     private string enemyTag;
-    private Transform lastTargetTransform; // Son hedef transformunu saklamak için
+    private Transform lastTargetTransform; 
 
     private void Start()
     {
@@ -32,14 +32,14 @@ public class Throw : MonoBehaviour
         isPlayer = gameObject.CompareTag("Player");
         DetermineEnemyTag();
 
-        // Kamerayý baþlangýçta oyuncuyu takip edecek þekilde ayarla
+        
         if (isPlayer)
         {
             cinemachineCamera.Follow = transform;
             cinemachineCamera.LookAt = transform;
 
-            cinemachineCamera.transform.position = new Vector3(0, 10, -10); // Örnek konum
-            cinemachineCamera.transform.rotation = Quaternion.Euler(30, 0, 0); // Örnek rotasyon
+            cinemachineCamera.transform.position = new Vector3(0, 10, -10); 
+            cinemachineCamera.transform.rotation = Quaternion.Euler(30, 0, 0); 
         }
     }
 
@@ -82,7 +82,7 @@ public class Throw : MonoBehaviour
 
         foreach (GameObject potentialTarget in targets)
         {
-            if (potentialTarget != this.gameObject) // Kendini hedef olarak seçme
+            if (potentialTarget != this.gameObject) 
             {
                 float distanceToTarget = (potentialTarget.transform.position - transform.position).sqrMagnitude;
                 if (distanceToTarget < closestDistance)
@@ -97,8 +97,8 @@ public class Throw : MonoBehaviour
         if (closestTarget != lastTargetTransform)
         {
             lastTargetTransform = closestTarget;
-            targetTransform = lastTargetTransform; // Hedef transformunu güncelle
-            cinemachineCamera.LookAt = targetTransform; // Kamera hedefe bakacak þekilde ayarla
+            targetTransform = lastTargetTransform; 
+            cinemachineCamera.LookAt = targetTransform; 
             Debug.Log("Target acquired: " + (targetTransform != null ? targetTransform.gameObject.name : "none"));
         }
     }

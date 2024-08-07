@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
-using System.Linq; // Linq kütüphanesini ekleyelim
+using System.Linq; 
 
 public class isGameOver : MonoBehaviour
 {
@@ -14,14 +14,14 @@ public class isGameOver : MonoBehaviour
     private string winnerName;
     public bool isPlaying;
     SFX sfxManager;
-    private bool gameEnded; // Oyun bitip bitmediðini kontrol etmek için bayrak
+    private bool gameEnded; 
 
     private List<CharacterData> characters = new List<CharacterData>();
 
     private void Awake()
     {
         isPlaying = true;
-        gameEnded = false; // Baþlangýçta oyun bitmemiþ
+        gameEnded = false; 
         // Singleton
         if (instance == null)
         {
@@ -47,7 +47,7 @@ public class isGameOver : MonoBehaviour
     {
         characters.Remove(deadCharacter);
 
-        // Karakterleri takým tag'ine göre gruplara ayýrarak kontrol edelim
+        //hedef belirlemek için target belirleme
         var team1 = characters.Where(c => c.GetTeamTag() == "Team1" || c.GetTeamTag() == "Player").ToList();
         var team2 = characters.Where(c => c.GetTeamTag() == "Team2").ToList();
 
@@ -67,8 +67,8 @@ public class isGameOver : MonoBehaviour
 
     public void EndTheGame(string winnerName)
     {
-        if (gameEnded) return; // Eðer oyun zaten bitmiþse, metodu çalýþtýrma
-        gameEnded = true; // Oyun bitti olarak iþaretle
+        if (gameEnded) return; 
+        gameEnded = true; 
 
         sfxManager.PlaySound(4);
         sfxManager.PlaySound(5);
@@ -79,18 +79,18 @@ public class isGameOver : MonoBehaviour
         isPlaying = false;
 
         winnerText.text = "Winner: " + winnerName;
-        Time.timeScale = 0f; // Zamaný durdur
+        Time.timeScale = 0f; 
     }
 
     public void ReMatchButton()
     {
-        Time.timeScale = 1f; // Zamaný yeniden baþlat
+        Time.timeScale = 1f; 
         SceneManager.LoadScene("InGame");
     }
 
     public void MainMenuButton()
     {
-        Time.timeScale = 1f; // Zamaný yeniden baþlat
+        Time.timeScale = 1f; 
         SceneManager.LoadScene("MainMenu");
     }
 }
