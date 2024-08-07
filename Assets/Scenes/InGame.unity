@@ -781,11 +781,11 @@ MonoBehaviour:
   Snowball: {fileID: 5186300903287209249, guid: b61a4212be437684e87c2d0c9bd86974, type: 3}
   AnimationControl: {fileID: 132022705}
   AudioManager: {fileID: 1446084794}
+  dataObject: {fileID: 508618996}
   CharacterAnimator: {fileID: 125801598}
   cinemachineCamera: {fileID: 0}
   SnowballRB: {fileID: 9124092458457511328, guid: b61a4212be437684e87c2d0c9bd86974, type: 3}
   cameraOffset: {x: 0, y: 5, z: -10}
-  leadFactor: 0.3
 --- !u!1 &126852405
 GameObject:
   m_ObjectHideFlags: 3
@@ -1045,11 +1045,11 @@ MonoBehaviour:
   Snowball: {fileID: 5186300903287209249, guid: b61a4212be437684e87c2d0c9bd86974, type: 3}
   AnimationControl: {fileID: 132022705}
   AudioManager: {fileID: 1446084794}
+  dataObject: {fileID: 0}
   CharacterAnimator: {fileID: 125801598}
   cinemachineCamera: {fileID: 0}
   SnowballRB: {fileID: 9124092458457511328, guid: b61a4212be437684e87c2d0c9bd86974, type: 3}
   cameraOffset: {x: 0, y: 5, z: -10}
-  leadFactor: 0.5
 --- !u!114 &132022708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2229,6 +2229,53 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8c84ec93cec72764d83afcd5d6455851, type: 3}
   m_PrefabInstance: {fileID: 1479724796}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &508618996
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 508618997}
+  - component: {fileID: 508618998}
+  m_Layer: 0
+  m_Name: setting
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &508618997
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 508618996}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1690611586}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &508618998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 508618996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 614805542d5da5246a23d5699f57c402, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SelectScreen: {fileID: 0}
+  snowballSpeed: 0
+  leadFactor: 0
 --- !u!1001 &560526813
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4794,11 +4841,11 @@ MonoBehaviour:
   Snowball: {fileID: 5186300903287209249, guid: b61a4212be437684e87c2d0c9bd86974, type: 3}
   AnimationControl: {fileID: 1571558443}
   AudioManager: {fileID: 1446084794}
+  dataObject: {fileID: 508618996}
   CharacterAnimator: {fileID: 1315660394}
   cinemachineCamera: {fileID: 0}
   SnowballRB: {fileID: 9124092458457511328, guid: b61a4212be437684e87c2d0c9bd86974, type: 3}
   cameraOffset: {x: 0, y: 5, z: -10}
-  leadFactor: 0.5
 --- !u!1 &1339352921 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 50a36b1a8e99d8b4ab8ca304bf466b13, type: 3}
@@ -6005,11 +6052,11 @@ MonoBehaviour:
   Snowball: {fileID: 5186300903287209249, guid: b61a4212be437684e87c2d0c9bd86974, type: 3}
   AnimationControl: {fileID: 1571558443}
   AudioManager: {fileID: 1446084794}
+  dataObject: {fileID: 0}
   CharacterAnimator: {fileID: 125801598}
   cinemachineCamera: {fileID: 0}
   SnowballRB: {fileID: 9124092458457511328, guid: b61a4212be437684e87c2d0c9bd86974, type: 3}
   cameraOffset: {x: 0, y: 5, z: -10}
-  leadFactor: 0.5
 --- !u!1001 &1591183201
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6382,6 +6429,7 @@ Transform:
   - {fileID: 1446084797}
   - {fileID: 1013696474}
   - {fileID: 1945949826}
+  - {fileID: 508618997}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1695333865 stripped
@@ -7053,11 +7101,11 @@ MonoBehaviour:
   Snowball: {fileID: 1695333865}
   AnimationControl: {fileID: 2120099961}
   AudioManager: {fileID: 1446084794}
+  dataObject: {fileID: 508618996}
   CharacterAnimator: {fileID: 1803387734}
   cinemachineCamera: {fileID: 0}
   SnowballRB: {fileID: 1695333867}
   cameraOffset: {x: 0, y: 5, z: -10}
-  leadFactor: 0.5
 --- !u!95 &1803387734
 Animator:
   serializedVersion: 5

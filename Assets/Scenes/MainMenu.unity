@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 127781854}
   - component: {fileID: 127781853}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: easy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -340,8 +340,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1456099901}
-        m_TargetAssemblyTypeName: PlayButton, Assembly-CSharp
-        m_MethodName: Play
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: setEasy
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -402,7 +402,7 @@ GameObject:
   - component: {fileID: 271861260}
   - component: {fileID: 271861259}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: normal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -473,8 +473,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1456099901}
-        m_TargetAssemblyTypeName: PlayButton, Assembly-CSharp
-        m_MethodName: Play
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: setNormal
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -901,7 +901,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &890653617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1330,8 +1330,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 614805542d5da5246a23d5699f57c402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterData: {fileID: 0}
   SelectScreen: {fileID: 890653616}
+  snowballSpeed: 0
+  leadFactor: 0
 --- !u!4 &1456099902
 Transform:
   m_ObjectHideFlags: 0
@@ -1431,8 +1432,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1456099901}
-        m_TargetAssemblyTypeName: PlayButton, Assembly-CSharp
-        m_MethodName: Play
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: selectDifficultyScreen
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1627,7 +1628,7 @@ GameObject:
   - component: {fileID: 2049091699}
   - component: {fileID: 2049091698}
   m_Layer: 5
-  m_Name: Button (3)
+  m_Name: hard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1698,8 +1699,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1456099901}
-        m_TargetAssemblyTypeName: PlayButton, Assembly-CSharp
-        m_MethodName: Play
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: setHard
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

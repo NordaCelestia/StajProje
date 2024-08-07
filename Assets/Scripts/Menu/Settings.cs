@@ -5,18 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class Settings : MonoBehaviour
 {
-    [SerializeField] private CharacterDataScriptableObject characterData;
     [SerializeField] GameObject SelectScreen;
-    
+    public float snowballSpeed, leadFactor;
+
+
 
     private void Start()
     {
-       
-    }
-
-    public void Play()
-    {
-        SceneManager.LoadScene("InGame");
+        
     }
 
     public void selectDifficultyScreen()
@@ -24,12 +20,34 @@ public class Settings : MonoBehaviour
         SelectScreen.SetActive(true);
     }
 
-    public void SelectDifficulty(float snowballSpeed, float leadFactor)
+    public void setEasy()
     {
-        if (characterData != null)
-        {
-            characterData.snowballSpeed = snowballSpeed;
-            characterData.leadFactor = leadFactor;
-        }
+        snowballSpeed = 50f;
+        leadFactor = 0.001f;
+        SaveSettings();
+        SceneManager.LoadScene("InGame");
+    }
+
+    public void setNormal()
+    {
+        snowballSpeed = 60f;
+        leadFactor = 0.9f;
+        SaveSettings();
+        SceneManager.LoadScene("InGame");
+    }
+
+    public void setHard()
+    {
+        snowballSpeed = 75f;
+        leadFactor = 10f;
+        SaveSettings();
+        SceneManager.LoadScene("InGame");
+    }
+
+    public void SaveSettings()
+    {
+        PlayerPrefs.SetFloat("SnowballSpeed", snowballSpeed);
+        PlayerPrefs.SetFloat("LeadFactor", leadFactor);
+        PlayerPrefs.Save(); 
     }
 }

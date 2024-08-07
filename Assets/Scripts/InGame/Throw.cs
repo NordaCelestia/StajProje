@@ -13,7 +13,7 @@ public class Throw : MonoBehaviour
     [SerializeField] Vector3 cameraOffset = new Vector3(0, 5, -10); // Kamera ile ilgili kodlarý devre dýþý býrakma
     float leadFactor;
 
-    CharacterDataScriptableObject characterData;
+ 
     bool firstRun;
     byte throwSfxRandom, throwCooldownRandom;
     SFX sfxManager;
@@ -23,10 +23,27 @@ public class Throw : MonoBehaviour
     private string enemyTag;
     private Transform lastTargetTransform;
 
+    private void Awake()
+    {
+        
+
+        if (!isPlayer)
+        {
+            snowballSpeed = PlayerPrefs.GetFloat("SnowballSpeed");
+            leadFactor = PlayerPrefs.GetFloat("LeadFactor");
+        }
+        else
+        {
+            snowballSpeed = 75;
+            leadFactor = 5f;
+        }
+    }
+
     private void Start()
     {
         
         firstRun = true;
+        
         sfxManager = AudioManager.GetComponent<SFX>();
         SnowballRB = Snowball.GetComponent<Rigidbody>();
         ThrowSnowball();
@@ -35,16 +52,7 @@ public class Throw : MonoBehaviour
         DetermineEnemyTag();
 
         
-        if (isPlayer)
-        {
-            snowballSpeed = 70;
-            leadFactor = 0.5f;
-        }
-        else
-        {
-            snowballSpeed = characterData.snowballSpeed;
-            leadFactor = characterData.leadFactor;
-        }
+        
     }
 
     void Update()
