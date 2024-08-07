@@ -7,7 +7,7 @@ public class CharacterData : MonoBehaviour
 {
     [SerializeField] private CharacterDataScriptableObject characterData;
     [SerializeField] Image hpBar;
-    [SerializeField] GameObject healthBar, GameOverManager, AudioManager, damageVFXPrefab;
+    [SerializeField] GameObject healthBar, GameOverManager, AudioManager, damageVFXPrefab, dieVFXPrefab;
 
     private string teamTag;
     isGameOver isGameOver;
@@ -50,15 +50,24 @@ public class CharacterData : MonoBehaviour
     public void TakeDamage()
     {
         sfxManager.PlaySound(3);
+
+        if (currentHealth > 1)
+        {
+            Instantiate(damageVFXPrefab, this.gameObject.transform.position + new Vector3(0, 2, 0), Quaternion.identity);
+        } //damage VFX
+
         currentHealth -= 1;
         Debug.Log(characterData.characterName + " takes damage! remaining health: " + currentHealth);
         UpdateUI();
 
-        Instantiate(damageVFXPrefab, this.gameObject.transform.position, Quaternion.identity); //damage VFX
+       
 
         if (currentHealth <= 0)
         {
-            isGameOver.CharacterDied(this); // Karakter öldüðünde bildir
+            isGameOver.CharacterDied(this);
+            Instantiate(dieVFXPrefab, this.gameObject.transform.position + new Vector3(0, 2, 0), Quaternion.identity);
+
+            this.gameObject.SetActive(false);  // Karakter öldüðünde bildir
         }
     }
 

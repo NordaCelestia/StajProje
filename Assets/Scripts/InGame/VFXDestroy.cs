@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class VFXDestroy : MonoBehaviour
 {
-    private float secondsToSuicide = 1.5f;
+    private float secondsToSuicide = 1f;
 
     void Start()
     {
