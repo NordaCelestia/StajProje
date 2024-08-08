@@ -7,20 +7,18 @@ public class Throw : MonoBehaviour
 {
     [SerializeField] GameObject throwPosition, Snowball, AnimationControl, AudioManager;
     [SerializeField] Animator CharacterAnimator;
-    [SerializeField] CinemachineVirtualCamera cinemachineCamera; // Kamera ile ilgili kodlarý devre dýþý býrakma
+    [SerializeField] CinemachineVirtualCamera cinemachineCamera; 
     float snowballSpeed, leadFactor;
     [SerializeField] Rigidbody SnowballRB;
-    [SerializeField] Vector3 cameraOffset = new Vector3(0, 5, -10); // Kamera ile ilgili kodlarý devre dýþý býrakma
-    
+    [SerializeField] Vector3 cameraOffset = new Vector3(0, 5, -10); 
 
- 
     bool firstRun;
     byte throwSfxRandom, throwCooldownRandom;
     SFX sfxManager;
     private Transform targetTransform;
     private Rigidbody targetRigidbody;
     private bool isPlayer;
-    private string enemyTag;
+    private string[] enemyTags;
     private Transform lastTargetTransform;
 
     private void Awake()
@@ -41,18 +39,11 @@ public class Throw : MonoBehaviour
 
     private void Start()
     {
-        
         firstRun = true;
-        
         sfxManager = AudioManager.GetComponent<SFX>();
         SnowballRB = Snowball.GetComponent<Rigidbody>();
         ThrowSnowball();
-
-        
-        DetermineEnemyTag();
-
-        
-        
+        DetermineEnemyTags();
     }
 
     void Update()
@@ -60,17 +51,17 @@ public class Throw : MonoBehaviour
         FindTarget();
     }
 
-    void DetermineEnemyTag()
+    void DetermineEnemyTags()
     {
-        if (gameObject.CompareTag("Player"))
+        if (gameObject.CompareTag("Player") || gameObject.CompareTag("Team1"))
         {
-            enemyTag = "Team2";
-            Debug.Log("Player is looking for targets with tag 'Team2'.");
+            enemyTags = new string[] { "Team2" };
+            Debug.Log(gameObject.tag + " is looking for targets with tag 'Team2'.");
         }
         else if (gameObject.CompareTag("Team2"))
         {
-            enemyTag = "Player";
-            Debug.Log("Team2 is looking for targets with tag 'Player'.");
+            enemyTags = new string[] { "Player", "Team1" };
+            Debug.Log("Team2 is looking for targets with tags 'Player' and 'Team1'.");
         }
         else
         {
@@ -80,19 +71,25 @@ public class Throw : MonoBehaviour
 
     void FindTarget()
     {
-        if (string.IsNullOrEmpty(enemyTag))
+        if (enemyTags == null || enemyTags.Length == 0)
         {
-            Debug.LogWarning("Enemy tag is not set. Cannot find target.");
+            Debug.LogWarning("Enemy tags are not set. Cannot find target.");
             return;
         }
 
-        GameObject[] targets = GameObject.FindGameObjectsWithTag(enemyTag);
-        Debug.Log("Found " + targets.Length + " targets with tag '" + enemyTag + "'.");
+        List<GameObject> potentialTargets = new List<GameObject>();
+        foreach (string tag in enemyTags)
+        {
+            GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
+            potentialTargets.AddRange(targets);
+        }
+
+        Debug.Log("Found " + potentialTargets.Count + " targets with tags '" + string.Join(", ", enemyTags) + "'.");
 
         float closestDistance = Mathf.Infinity;
         Transform closestTarget = null;
 
-        foreach (GameObject potentialTarget in targets)
+        foreach (GameObject potentialTarget in potentialTargets)
         {
             if (potentialTarget != this.gameObject && (isPlayer ? !potentialTarget.CompareTag("Player") : true))
             {
@@ -116,14 +113,14 @@ public class Throw : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
 
-        // Kamera ile ilgili kodlarý devre dýþý býrakma
+        
         if (isPlayer)
         {
             if (!newTarget.CompareTag("Player"))
             {
                 lastTargetTransform = newTarget;
                 targetTransform = lastTargetTransform;
-                // cinemachineCamera.LookAt = targetTransform;
+                
                 Debug.Log("Target acquired: " + (targetTransform != null ? targetTransform.gameObject.name : "none"));
             }
         }
@@ -131,7 +128,7 @@ public class Throw : MonoBehaviour
         {
             lastTargetTransform = newTarget;
             targetTransform = lastTargetTransform;
-            // cinemachineCamera.LookAt = targetTransform;
+            
             Debug.Log("Target acquired: " + (targetTransform != null ? targetTransform.gameObject.name : "none"));
         }
     }
