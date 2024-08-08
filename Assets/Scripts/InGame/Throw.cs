@@ -8,10 +8,10 @@ public class Throw : MonoBehaviour
     [SerializeField] GameObject throwPosition, Snowball, AnimationControl, AudioManager;
     [SerializeField] Animator CharacterAnimator;
     [SerializeField] CinemachineVirtualCamera cinemachineCamera; // Kamera ile ilgili kodlarý devre dýþý býrakma
-    float snowballSpeed;
+    float snowballSpeed, leadFactor;
     [SerializeField] Rigidbody SnowballRB;
     [SerializeField] Vector3 cameraOffset = new Vector3(0, 5, -10); // Kamera ile ilgili kodlarý devre dýþý býrakma
-    float leadFactor;
+    
 
  
     bool firstRun;
@@ -25,7 +25,7 @@ public class Throw : MonoBehaviour
 
     private void Awake()
     {
-        
+        isPlayer = gameObject.CompareTag("Player");
 
         if (!isPlayer)
         {
@@ -35,7 +35,7 @@ public class Throw : MonoBehaviour
         else
         {
             snowballSpeed = 75;
-            leadFactor = 5f;
+            leadFactor = 0.5f;
         }
     }
 
@@ -48,7 +48,7 @@ public class Throw : MonoBehaviour
         SnowballRB = Snowball.GetComponent<Rigidbody>();
         ThrowSnowball();
 
-        isPlayer = gameObject.CompareTag("Player");
+        
         DetermineEnemyTag();
 
         

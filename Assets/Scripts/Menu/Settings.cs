@@ -31,15 +31,15 @@ public class Settings : MonoBehaviour
     public void setNormal()
     {
         snowballSpeed = 60f;
-        leadFactor = 0.9f;
+        leadFactor = 0.5f;
         SaveSettings();
         SceneManager.LoadScene("InGame");
     }
 
     public void setHard()
     {
-        snowballSpeed = 75f;
-        leadFactor = 10f;
+        snowballSpeed = 80f;
+        leadFactor = 0.4f;
         SaveSettings();
         SceneManager.LoadScene("InGame");
     }
