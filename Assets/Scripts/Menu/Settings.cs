@@ -7,12 +7,12 @@ public class Settings : MonoBehaviour
 {
     [SerializeField] GameObject SelectScreen;
     public float snowballSpeed, leadFactor;
+    public bool isPaused = false;
+    [SerializeField] Animator pauseAnimator;
 
-
-
-    private void Start()
+    private void Update()
     {
-        
+        PauseGame();
     }
 
     public void selectDifficultyScreen()
@@ -38,8 +38,8 @@ public class Settings : MonoBehaviour
 
     public void setHard()
     {
-        snowballSpeed = 80f;
-        leadFactor = 0.4f;
+        snowballSpeed = 100f;
+        leadFactor = 0.2f;
         SaveSettings();
         SceneManager.LoadScene("InGame");
     }
@@ -49,5 +49,35 @@ public class Settings : MonoBehaviour
         PlayerPrefs.SetFloat("SnowballSpeed", snowballSpeed);
         PlayerPrefs.SetFloat("LeadFactor", leadFactor);
         PlayerPrefs.Save(); 
+    }
+
+    public void PauseGame()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (!isPaused)
+            {
+                StartCoroutine(waitForTabOpen());
+            }
+            else
+            {
+                Time.timeScale = 1f;
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+                pauseAnimator.SetTrigger("closeTab");
+                isPaused = false;
+                
+            }
+        }
+    }
+
+    IEnumerator waitForTabOpen()
+    {
+        pauseAnimator.SetTrigger("openTab");
+        yield return new WaitForSeconds(0.8f);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        isPaused = true;
+        Time.timeScale = 0f;
     }
 }

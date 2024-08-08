@@ -37,9 +37,12 @@ public class CharacterData : MonoBehaviour
 
     private void Update()
     {
-        Vector3 newPosition = healthBar.transform.position;
-        newPosition.x = this.gameObject.transform.position.x;
-        healthBar.transform.position = newPosition;
+        if (healthBar != null)
+        {
+            Vector3 newPosition = healthBar.transform.position;
+            newPosition.x = this.gameObject.transform.position.x;
+            healthBar.transform.position = newPosition;
+        }
 
         if (Input.GetKeyDown(KeyCode.O)) // Test damage
         {
@@ -64,10 +67,10 @@ public class CharacterData : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            isGameOver.CharacterDied(this);
+            isGameOver.CharacterDied(this); // Karakter öldüðünde bildir
             Instantiate(dieVFXPrefab, this.gameObject.transform.position + new Vector3(0, 2, 0), Quaternion.identity);
 
-            this.gameObject.SetActive(false);  // Karakter öldüðünde bildir
+            this.gameObject.SetActive(false);  
         }
     }
 
