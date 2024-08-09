@@ -1,20 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Settings : MonoBehaviour
 {
-    [SerializeField] GameObject SelectScreen,LoadingScreen;
-    [SerializeField] Slider slider;
+    [SerializeField] GameObject SelectScreen,LoadingScreen,OptionsScreen;
+    [SerializeField] Slider slider, volumeSlider;
     public float snowballSpeed, leadFactor;
     public bool isPaused = false;
-    [SerializeField] Animator pauseAnimator;
+    public bool isOptionActive = false;
+    [SerializeField] Animator pauseAnimator,optionAnimator;
+    public AudioMixer audioMixer;
 
     private void Update()
     {
         PauseGame();
+    }
+
+    public void setMusicValue()
+    {
+        float volume = volumeSlider.value;
+        audioMixer.SetFloat("music", Mathf.Log10(volume)*20);
     }
 
     IEnumerator LoadAsynchronously()
@@ -86,6 +95,25 @@ public class Settings : MonoBehaviour
                 
             }
         }
+    }
+
+    public void Options()
+    {
+        if (!isOptionActive)
+        {
+            optionAnimator.SetTrigger("open");
+            isOptionActive = true;
+        }
+        else
+        {
+            optionAnimator.SetTrigger("close");
+            isOptionActive = false;
+        }
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 
     IEnumerator waitForTabOpen()

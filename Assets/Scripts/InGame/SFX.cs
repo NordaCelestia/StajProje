@@ -5,7 +5,8 @@ public class SFX : MonoBehaviour
     public static SFX Instance { get; private set; }
 
     [SerializeField] private AudioClip[] audioClips; 
-    private AudioSource[] audioSources; 
+    private AudioSource[] audioSources;
+   
 
     private void Awake()
     {   
@@ -16,6 +17,8 @@ public class SFX : MonoBehaviour
             audioSources[i].clip = audioClips[i];
         }
     }
+
+   
 
     public void PlaySound(int i)
     {

@@ -2762,10 +2762,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectScreen: {fileID: 0}
+  LoadingScreen: {fileID: 0}
+  OptionsScreen: {fileID: 0}
+  slider: {fileID: 0}
+  volumeSlider: {fileID: 0}
   snowballSpeed: 0
   leadFactor: 0
   isPaused: 0
   pauseAnimator: {fileID: 6747467}
+  audioMixer: {fileID: 0}
 --- !u!1001 &528880351
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4795,7 +4800,7 @@ AudioSource:
   m_GameObject: {fileID: 1005981635}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 154998799393539995, guid: f07cd5d0e29709a4e8097e8d4ca56933, type: 2}
   m_audioClip: {fileID: 8300000, guid: a77c813aa770e9147adbe7c349713efb, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -9857,7 +9862,7 @@ AudioSource:
   m_GameObject: {fileID: 1909983238}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 154998799393539995, guid: f07cd5d0e29709a4e8097e8d4ca56933, type: 2}
   m_audioClip: {fileID: 8300000, guid: 1a6dd1a0977b6114f92ef3f78e4637d6, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.78
