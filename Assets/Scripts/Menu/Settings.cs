@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Settings : MonoBehaviour
 {
-    [SerializeField] GameObject SelectScreen;
+    [SerializeField] GameObject SelectScreen,LoadingScreen;
+    [SerializeField] Slider slider;
     public float snowballSpeed, leadFactor;
     public bool isPaused = false;
     [SerializeField] Animator pauseAnimator;
@@ -13,6 +15,21 @@ public class Settings : MonoBehaviour
     private void Update()
     {
         PauseGame();
+    }
+
+    IEnumerator LoadAsynchronously()
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync(1);
+
+        LoadingScreen.SetActive(true);
+
+        while (!operation.isDone)
+        {
+            float progress = Mathf.Clamp01(operation.progress / .9f);
+            slider.value = progress;
+
+            yield return null;
+        }
     }
 
     public void selectDifficultyScreen()
@@ -25,7 +42,7 @@ public class Settings : MonoBehaviour
         snowballSpeed = 50f;
         leadFactor = 0.001f;
         SaveSettings();
-        SceneManager.LoadScene("InGame");
+        StartCoroutine(LoadAsynchronously());
     }
 
     public void setNormal()
@@ -33,7 +50,7 @@ public class Settings : MonoBehaviour
         snowballSpeed = 60f;
         leadFactor = 0.5f;
         SaveSettings();
-        SceneManager.LoadScene("InGame");
+        StartCoroutine(LoadAsynchronously());
     }
 
     public void setHard()
@@ -41,7 +58,7 @@ public class Settings : MonoBehaviour
         snowballSpeed = 100f;
         leadFactor = 0.2f;
         SaveSettings();
-        SceneManager.LoadScene("InGame");
+        StartCoroutine(LoadAsynchronously());
     }
 
     public void SaveSettings()
