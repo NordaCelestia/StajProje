@@ -69,7 +69,7 @@ public class CharacterData : MonoBehaviour
         {
             isGameOver.CharacterDied(this); // Karakter öldüðünde bildir
             Instantiate(dieVFXPrefab, this.gameObject.transform.position + new Vector3(0, 2, 0), Quaternion.identity);
-
+            sfxManager.PlaySound(6);
             this.gameObject.SetActive(false);  
         }
     }
